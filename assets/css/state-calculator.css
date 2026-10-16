@@ -1,0 +1,909 @@
+/* ==========================================================================
+   State Home Loan Centre - Enterprise Financial Sector Calculator Engine
+   Engineered for Australian Credit Assessment & Lending Software Standards
+   High Information Density, Screen-Fitted Layout, Crisp Tabular Numbers
+   ========================================================================== */
+
+:root {
+    --shl-navy: #0C2139;
+    --shl-navy-deep: #081728;
+    --shl-navy-surface: #102A4C;
+    --shl-blue: #008FD5;
+    --shl-blue-hover: #0076B3;
+    --shl-gold: #F6B91A;
+    --shl-gold-deep: #D4A017;
+    --shl-text-dark: #0F172A;
+    --shl-text-slate: #334155;
+    --shl-text-muted: #64748B;
+    --shl-border: #CBD5E1;
+    --shl-border-light: #E2E8F0;
+    --shl-bg-surface: #FFFFFF;
+    --shl-bg-subtle: #F8FAFC;
+    --shl-bg-canvas: #F1F5F9;
+}
+
+/* ----------------------------------------------------
+   1. Compact Financial Software Utility / Breadcrumb Bar
+   ---------------------------------------------------- */
+.shl-calc-topbar {
+    background: #081827;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 0 10px;
+}
+
+.shl-calc-topbar__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.shl-calc-topbar__left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.shl-calc-crumb {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.shl-calc-crumb li a {
+    color: #94A3B8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.shl-calc-crumb li a:hover {
+    color: #FFFFFF;
+}
+
+.shl-calc-crumb .sep {
+    color: #64748B;
+    font-size: 9px;
+}
+
+.shl-calc-crumb .current {
+    color: #38BDF8;
+    font-weight: 600;
+}
+
+.shl-calc-heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.shl-calc-topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.shl-sec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0, 143, 213, 0.12);
+    border: 1px solid rgba(0, 143, 213, 0.28);
+    color: #38BDF8;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.shl-sec-link {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #E2E8F0;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+}
+
+.shl-sec-link:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+}
+
+/* ----------------------------------------------------
+   2. Main Calculator Section (Screen-Fitted)
+   ---------------------------------------------------- */
+.shl-calc-page {
+    background: var(--shl-bg-canvas);
+    padding: 10px 0 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--shl-text-dark);
+}
+
+/* Tab Navigation Bar */
+.shl-tabs-wrapper {
+    background: var(--shl-bg-surface);
+    border: 1px solid var(--shl-border);
+    border-radius: 5px;
+    padding: 3px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 3px;
+    box-shadow: 0 1px 2px rgba(12, 33, 57, 0.03);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.shl-tabs-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.shl-nav-tab {
+    flex: 1 1 auto;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--shl-text-slate);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.shl-nav-tab i {
+    font-size: 12px;
+    color: var(--shl-text-muted);
+    transition: color 0.15s ease;
+}
+
+.shl-nav-tab:hover {
+    color: var(--shl-navy);
+    background: var(--shl-bg-subtle);
+}
+
+.shl-nav-tab.active {
+    background: var(--shl-navy);
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.shl-nav-tab.active i {
+    color: var(--shl-gold);
+}
+
+/* ----------------------------------------------------
+   3. Two-Column Dashboard Grid
+   ---------------------------------------------------- */
+.shl-calc-container {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 12px;
+    align-items: stretch;
+}
+
+@media (max-width: 991px) {
+    .shl-calc-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ----------------------------------------------------
+   4. Left Column: Input Card (High Density)
+   ---------------------------------------------------- */
+.shl-input-card {
+    background: var(--shl-bg-surface);
+    border: 1px solid var(--shl-border);
+    border-radius: 5px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 2px rgba(12, 33, 57, 0.02);
+}
+
+/* Stepper Nav Pill (Inside Borrowing) */
+.shl-stepper-nav {
+    display: flex;
+    gap: 3px;
+    background: #F1F5F9;
+    border: 1px solid var(--shl-border-light);
+    border-radius: 4px;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+
+.shl-step-pill {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--shl-text-muted);
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    transition: all 0.15s ease;
+}
+
+.shl-step-pill.active {
+    background: #FFFFFF;
+    color: var(--shl-navy);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Field Group & Labels */
+.shl-field-group {
+    margin-bottom: 9px;
+}
+
+.shl-field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--shl-text-slate);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Segmented Options (Single/Joint, Owner/Inv) */
+.shl-segmented-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.shl-picker-option {
+    border: 1px solid var(--shl-border);
+    border-radius: 4px;
+    background: var(--shl-bg-subtle);
+    color: var(--shl-text-slate);
+    height: 30px;
+    padding: 0 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.shl-picker-option i {
+    font-size: 12px;
+    color: var(--shl-blue);
+}
+
+.shl-picker-option:hover {
+    border-color: var(--shl-blue);
+    background: #FFFFFF;
+}
+
+.shl-picker-option.active {
+    border-color: #2563EB;
+    background: #EFF6FF;
+    color: #1E3A8A;
+    font-weight: 700;
+}
+
+/* Dependants Stepper Counter */
+.shl-counter-stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--shl-border);
+    border-radius: 4px;
+    background: var(--shl-bg-subtle);
+    height: 30px;
+    overflow: hidden;
+}
+
+.shl-counter-btn {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--shl-navy);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+}
+
+.shl-counter-btn:hover {
+    background: var(--shl-border-light);
+}
+
+.shl-counter-input {
+    width: 40px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--shl-navy);
+    outline: none;
+    font-feature-settings: 'tnum';
+}
+
+/* Styled Inputs */
+.shl-input-holder {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.shl-curr-symbol {
+    position: absolute;
+    left: 9px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--shl-text-muted);
+    pointer-events: none;
+}
+
+.shl-unit-suffix {
+    position: absolute;
+    right: 9px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--shl-text-muted);
+    pointer-events: none;
+}
+
+.shl-text-input {
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--shl-border);
+    border-radius: 4px;
+    padding: 5px 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--shl-navy);
+    background: #FFFFFF;
+    outline: none;
+    transition: all 0.15s ease;
+    font-feature-settings: 'tnum';
+}
+
+.shl-text-input.with-prefix {
+    padding-left: 22px;
+}
+
+.shl-text-input.with-suffix {
+    padding-right: 48px;
+}
+
+.shl-text-input:focus {
+    border-color: var(--shl-blue);
+    box-shadow: 0 0 0 2px rgba(0, 143, 213, 0.15);
+}
+
+.shl-select-input {
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--shl-border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--shl-navy);
+    background: #FFFFFF;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.15s ease;
+}
+
+.shl-select-input:focus {
+    border-color: var(--shl-blue);
+    box-shadow: 0 0 0 2px rgba(0, 143, 213, 0.15);
+}
+
+/* Range Sliders */
+.shl-slider-container {
+    margin-top: 4px;
+}
+
+.shl-range-track {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--shl-border-light);
+    accent-color: var(--shl-blue);
+    outline: none;
+    cursor: pointer;
+    display: block;
+}
+
+.shl-range-markers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--shl-text-muted);
+    margin-top: 2px;
+}
+
+/* Compact Preferences Box (Inside Profile tab) */
+.shl-pref-box {
+    background: var(--shl-bg-subtle);
+    border: 1px solid var(--shl-border-light);
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-top: 8px;
+}
+
+.shl-pref-box__title {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--shl-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.shl-pref-box__title i {
+    color: var(--shl-blue);
+}
+
+/* Switch Toggle (P&I / IO) */
+.az-calc-switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+    margin: 0;
+}
+
+.az-calc-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.az-calc-slider-toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CBD5E1;
+    transition: .2s;
+    border-radius: 18px;
+}
+
+.az-calc-slider-toggle:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .2s;
+    border-radius: 50%;
+}
+
+input:checked + .az-calc-slider-toggle {
+    background-color: var(--shl-blue);
+}
+
+input:checked + .az-calc-slider-toggle:before {
+    transform: translateX(16px);
+}
+
+/* Step Action Button */
+.shl-step-btn {
+    background: var(--shl-navy);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+    padding: 0 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.15s ease;
+}
+
+.shl-step-btn:hover {
+    background: var(--shl-navy-deep);
+}
+
+/* ----------------------------------------------------
+   5. Right Column: Output Summary Dashboard
+   ---------------------------------------------------- */
+.shl-result-dashboard {
+    background: var(--shl-navy);
+    border: 1px solid #1E3A5F;
+    border-radius: 5px;
+    padding: 14px 16px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shl-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.shl-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0, 143, 213, 0.16);
+    border: 1px solid rgba(0, 143, 213, 0.35);
+    color: #38BDF8;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+}
+
+.shl-save-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.shl-save-pill:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.shl-dashboard-lead {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94A3B8;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.shl-hero-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+}
+
+.shl-hero-number.gold {
+    color: var(--shl-gold);
+}
+
+/* Adjust Loan Slider Box */
+.shl-adjust-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 6px 8px;
+    margin-bottom: 8px;
+}
+
+.shl-adjust-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    color: #CBD5E1;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.shl-adjust-range {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    accent-color: var(--shl-gold);
+    cursor: pointer;
+    display: block;
+}
+
+/* Mini Repayment Grid */
+.shl-repay-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.shl-repay-mini-cell {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 3px;
+    padding: 5px 3px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shl-repay-mini-cell.featured {
+    background: rgba(0, 143, 213, 0.16);
+    border-color: rgba(0, 143, 213, 0.45);
+}
+
+.shl-mini-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #94A3B8;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+    display: block;
+    letter-spacing: 0.03em;
+}
+
+.shl-mini-val {
+    font-size: 13px;
+    font-weight: 800;
+    color: #FFFFFF;
+    font-variant-numeric: tabular-nums;
+}
+
+.shl-repay-mini-cell.featured .shl-mini-val {
+    color: var(--shl-gold);
+}
+
+/* Breakdown Visualizer */
+.shl-visual-split {
+    margin-bottom: 8px;
+}
+
+.shl-split-bar {
+    display: flex;
+    height: 7px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.shl-split-p {
+    background: var(--shl-blue);
+    transition: width 0.3s ease;
+}
+
+.shl-split-i {
+    background: var(--shl-gold);
+    transition: width 0.3s ease;
+}
+
+.shl-split-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #CBD5E1;
+}
+
+/* Action CTAs */
+.shl-cta-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+.shl-btn-gold-action {
+    background: #008FD5;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    height: 34px;
+    padding: 0 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: background 0.15s ease;
+}
+
+.shl-btn-gold-action:hover {
+    background: #0076B3;
+}
+
+.shl-btn-ghost-action {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #E2E8F0;
+    border-radius: 4px;
+    height: 30px;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.15s ease;
+}
+
+.shl-btn-ghost-action:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #FFFFFF;
+}
+
+.shl-disc-trigger {
+    text-align: center;
+    font-size: 10px;
+    color: #94A3B8;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 5px;
+    display: block;
+}
+
+.shl-disc-trigger:hover {
+    color: #FFFFFF;
+}
+
+/* ----------------------------------------------------
+   6. Compact Reference Strip Beneath Calculators
+   ---------------------------------------------------- */
+.shl-ref-strip {
+    margin-top: 10px;
+}
+
+.shl-pillar-card {
+    background: var(--shl-bg-surface);
+    border: 1px solid var(--shl-border-light);
+    border-radius: 4px;
+    padding: 10px 12px;
+    height: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.shl-pillar-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.shl-pillar-content {
+    flex: 1;
+}
+
+.shl-pillar-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--shl-navy);
+    margin: 0 0 1px 0;
+}
+
+.shl-pillar-text {
+    font-size: 10.5px;
+    color: var(--shl-text-muted);
+    line-height: 1.35;
+    margin: 0;
+}
+
+/* Modals */
+.shl-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(12, 33, 57, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.shl-modal-overlay.active {
+    display: flex;
+}
+
+.shl-modal-box {
+    background: #FFFFFF;
+    border-radius: 5px;
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.shl-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #64748B;
+    line-height: 1;
+}
+
+.shl-lender-chips {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin: 12px 0;
+}
+
+.shl-chip {
+    border: 1px solid var(--shl-border);
+    border-radius: 3px;
+    padding: 6px 5px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--shl-navy);
+    background: var(--shl-bg-subtle);
+}
+
+@media (max-width: 767px) {
+    .shl-lender-chips {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .shl-segmented-picker {
+        grid-template-columns: 1fr;
+    }
+}
